@@ -2,12 +2,12 @@
 import Chai from './chai.jsx'
 
 function App() {
-  
+  const username = "Prathamesh"
 
   return (
     <> 
    <Chai/>
-   <h1>Chai aur React | PS </h1>
+   <h1>Chai aur React {username} </h1> {/*{} These are expressions to call variable.  Only Evaluated(Final) outcomes can be passed*/}
    <p> Lorem, ipsum dolor.</p>
    </>
   )

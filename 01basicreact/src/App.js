@@ -1,5 +1,5 @@
 
-import Chai from './Chai'
+import Chai from './Chai.'
 
 function App() {
   return (

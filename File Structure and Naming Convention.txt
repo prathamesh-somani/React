@@ -1,0 +1,75 @@
+1. Core React Flow & Injection
+
+HTML Injection: React is essentially JavaScript that needs to be "injected" into an HTML file to work. Regardless of the build tool (Create React App, Vite, or Parcel), the core mechanism remains the same.
+
+Single Page Application (SPA): The entire application relies on a single index.html file. React modifies the DOM (Document Object Model) dynamically to change views (e.g., Home to Contact) without reloading the page.
+
+Timestamp: [04:44]
+
+2. Project Structure Comparison (Create React App vs. Vite)
+
+Create React App (CRA):
+
+The index.html is located in the public folder.
+
+It contains an empty <div id="root"></div>.
+
+"Magic" Injection: You won't see a <script> tag in the source code. The react-scripts package automatically injects the JavaScript bundle into index.html during the build process.
+
+Timestamp: [13:04]
+
+Vite:
+
+The index.html is located in the root directory (outside public).
+
+Explicit Injection: It explicitly includes the script tag <script type="module" src="/src/main.jsx"></script>, making the connection between HTML and JavaScript transparent.
+
+Timestamp: [15:16]
+
+3. Entry Point Explanation (index.js / main.jsx)
+
+This file is the bridge between React and the browser.
+
+ReactDOM.createRoot: React uses ReactDOM to create a virtual root. It selects the HTML element with id="root" using document.getElementById('root') and takes control of it.
+
+Rendering: The .render() method is then used to display the <App /> component inside that root div.
+
+Timestamp: [08:20]
+
+4. Creating Custom Components
+
+Function Components: A component is simply a JavaScript function that returns HTML (JSX).
+
+Naming Convention (Important): Component function names must start with a capital letter (e.g., Chai, not chai). If it starts with a lowercase letter, React/Vite may not recognize it as a component or throw errors.
+
+Timestamp: [22:05]
+
+File Extensions (.js vs .jsx):
+
+Vite: Strongly recommends using the .jsx extension for files containing JSX syntax.
+
+CRA: Allows .js for JSX files, but using .jsx is a good practice for clarity.
+
+Timestamp: [21:03]
+
+5. JSX Rules & Fragments
+
+Single Parent Rule: A component can only return one parent element. You cannot return two adjacent elements (e.g., an <h2> and a <p>) without wrapping them.
+
+Fragments: To avoid adding unnecessary <div> wrappers to the DOM, React provides "Fragments". You can use empty tags <> ... </> to group multiple elements.
+
+Timestamp: [24:21]
+
+6. Library Distinctions
+
+react: The core library that defines components and logic.
+
+react-dom: The library responsible for rendering those components specifically for the web (browser DOM). (React Native would use a different renderer).
+
+Timestamp: [07:05]
+
+7. Best Practices Recommended
+
+Always clean up the default boilerplate code (logos, unnecessary CSS, testing files) to understand the clean structure.
+
+Stick to standard conventions: Capitalize component names and keep file names consistent with component names (e.g., Chai.jsx containing function Chai()).

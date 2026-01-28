@@ -1,0 +1,56 @@
+Here are the important key aspects and notes from the video "06 Virtual DOM, Fibre and reconciliation" by Chai aur Code.
+
+1. Introduction & Purpose [00:23]
+Focus: This video is theoretical and deep-dives into React's internal workings. It is specifically designed for interview preparation and building a strong foundation.
+
+Relevance: While you might not use these concepts daily while coding, understanding them is crucial for explaining how React works "under the hood" during interviews.
+
+2. Virtual DOM & createRoot [03:19]
+What it is: React creates its own version of the DOM (Document Object Model), known as the Virtual DOM.
+
+How it works:
+
+When you use createRoot, React builds a tree structure in memory that mirrors the browser's DOM.
+
+Instead of reloading or repainting the entire page for every small change (which is slow), React compares its Virtual DOM with the Browser DOM.
+
+It only updates the specific elements that have changed.
+
+3. The Need for React Fiber [04:57]
+Problem with Old Approach: In earlier versions, React would update the UI immediately for every state change. If multiple updates came in quickly (e.g., from network calls), it could cause "jank" or unnecessary re-renders.
+
+Solution (Fiber): React Fiber is the new reconciliation engine (algorithm) introduced in React 16. It allows React to be "smart" about updates.
+
+Key Features of Fiber:
+
+Pause & Resume: It can pause rendering work to prioritize more important tasks (like user input or animation) and come back to it later. [08:04]
+
+Abort: It can discard work if it becomes unnecessary (e.g., if a new update supersedes an old one). [18:33]
+
+Prioritization: It assigns priority to different types of updates (e.g., animations get higher priority than data fetching).
+
+4. Reconciliation [10:28]
+Definition: Reconciliation is the algorithm React uses to diff one tree with another to determine which parts need to be changed.
+
+The Process: React compares the new Virtual DOM tree with the previous one. This "diffing" process identifies the exact changes needed, which are then committed to the real DOM.
+
+Recursive Nature: It recursively traverses the tree to find differences.
+
+5. Hydration [08:20]
+Concept: When a React app first loads, the browser might paint the initial HTML structure (buttons, images) quickly. However, the page isn't interactive yet because the JavaScript hasn't attached to it.
+
+The Process: Hydration is the phase where React "injects" JavaScript into this static HTML, attaching event listeners (like onClick) to make the buttons and UI actually functional.
+
+6. Importance of Keys in Lists [15:12]
+Why use Keys? When rendering lists, using key props is mandatory for performance, not just to avoid warnings.
+
+Fiber's Role: The Fiber algorithm uses keys to track which items in a list have changed, been added, or removed.
+
+Best Practice: Keys must be stable, predictable, and unique. Using proper keys allows Fiber to update lists efficiently without re-rendering the entire list.
+
+7. Summary
+Virtual DOM is the concept; Fiber is the engine/algorithm that implements it.
+
+Understanding these internals explains why React is performant and helps you answer complex interview questions about rendering and optimization.
+
+Video Link: 06 Virtual DOM, Fibre and reconciliation

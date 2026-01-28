@@ -1,0 +1,58 @@
+createRoot & The Virtual DOM [03:19]
+
+The createRoot method creates a structure similar to the browser's DOM (Document Object Model).
+
+Browser DOM: Traditionally, when an update occurs, the browser removes the entire DOM and repaints it. This leads to page reloads and visual "loading" glitches.
+
+Virtual DOM: React creates a virtual copy of the DOM in memory. It tracks the entire tree and, upon updates, compares its virtual tree with the browser's DOM. It then only updates the specific elements that changed, rather than repainting the whole page.
+
+The Need for Optimization [04:40]
+
+Immediate updates aren't always efficient. For example, if a value changes multiple times rapidly (due to network calls), updating the DOM for every intermediate value is wasteful.
+
+React needs a way to wait, batch updates, or skip intermediate states to optimize performance.
+
+React Fiber [06:40]
+
+Definition: Fiber is the new core algorithm (re-implementation) of React that handles the updating of the Virtual DOM. It is the engine "behind the scenes."
+
+Goal: To improve performance for areas like animation, layout, and gestures.
+
+Key Capabilities:
+
+Pause & Resume: It can pause work and come back to it later.
+
+Abort: It can stop work that is no longer needed (e.g., if a newer update arrives before the old one finishes).
+
+Prioritize: It can assign different priorities to different types of updates. For example, an animation update might be given higher priority than a data fetch update.
+
+Incremental Rendering: The ability to split rendering work into chunks and spread it out over multiple frames.
+
+Hydration [08:20]
+
+When a web page first loads, the layout (HTML/CSS) might appear (buttons, images), but they are not interactive yet.
+
+Hydration is the process where JavaScript "injects" itself into this static layout, attaching event listeners and making the buttons/elements actually clickable and functional.
+
+Reconciliation [10:28]
+
+Definition: Reconciliation is the recursive algorithm React uses to compare two trees (the current tree and the new tree) to determine what needs to be updated.
+
+It is essentially a "diffing" algorithm (similar to Git) that finds the difference between the browser's DOM and React's Virtual tree.
+
+It decides which parts of the UI need to be re-rendered.
+
+Importance of Keys in Lists [15:12]
+
+When rendering lists in React, using keys is crucial for Fiber's performance.
+
+Keys should be stable, predictable, and unique.
+
+They help the Fiber algorithm efficiently identify which items in a list have changed, been added, or been removed, preventing unnecessary re-renders of the entire list.
+
+Summary of the Process
+Render: React creates a Virtual DOM tree based on your code.
+
+Diffing (Reconciliation): When state changes (e.g., via setState), React compares the new Virtual Tree with the previous one.
+
+Commit: React Fiber calculates the most efficient way to update the real Browser DOM and applies only those specific changes.

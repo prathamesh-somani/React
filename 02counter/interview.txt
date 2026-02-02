@@ -1,0 +1,57 @@
+Discusses a common React interview scenario focusing on the useState hook, specifically how state updates are scheduled and batched. 
+It demonstrates why multiple immediate state updates might not behave as expected and how to fix it using callback functions.
+
+Key Notes
+The Interview Scenario [00:43]:
+
+The interviewer asks the candidate to create a simple counter with "Add" and "Remove" buttons.
+
+Once the basic counter is working, the interviewer duplicates the setCounter line multiple times inside the same function to see 
+if the candidate understands how React handles multiple updates.
+
+
+The Trick Question [02:26]
+:Code Setup: inside the addValue function, setCounter(counter + 1) is written 4 times.
+Question: If the current value is 15, what will be the value after clicking the button once?
+Common Assumption: Many assume the value will increment by 4 (i.e., 15 -> 16 -> 17 -> 18 -> 19).
+Actual Result: The value only increments by 1 (becomes 16).
+
+
+The Explanation (Why it fails) [04:01]:
+
+Batching: React’s useState sends updates in batches to the UI/virtual DOM. This is managed by React Fiber (the reconciliation algorithm).
+
+Stale State: In the code setCounter(counter + 1), the variable counter refers to the state at the time of the render. 
+If counter is 15, every single one of those 4 lines is effectively saying setCounter(15 + 1). 
+React merges these repetitive calls because they are doing the exact same work.
+
+The Solution: Functional Updates [05:07]:
+
+To make the counter increment by 4, you must use a callback function (setter method) inside setCounter.
+
+Syntax: setCounter(prevCounter => prevCounter + 1)
+
+Why it works: The callback function receives the most recently updated state as an argument (often named prevCounter or similar).
+
+When chained, the first call updates the state, and the second call receives that new state, and so on.
+
+Code Comparison
+The "Wrong" Way (Result: +1)
+
+// If counter is 15, all lines set it to 16
+setCounter(counter + 1);
+setCounter(counter + 1);
+setCounter(counter + 1);
+setCounter(counter + 1);
+
+
+The "Right" Way (Result: +4) [06:08]
+
+// Each call takes the previous result and adds 1
+setCounter(prevCounter => prevCounter + 1);
+setCounter(prevCounter => prevCounter + 1);
+setCounter(prevCounter => prevCounter + 1);
+setCounter(prevCounter => prevCounter + 1);
+
+Relevant Links
+Video: https://youtu.be/tOYkV6Yhrhs
